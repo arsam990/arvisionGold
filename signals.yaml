@@ -1,0 +1,16 @@
+fusion:
+  bearish_words:
+  - DOWN
+  - BEARISH
+  bullish_words:
+  - UP
+  - BULLISH
+  require_agreement: false
+risk:
+  atr_multiple_sl: 1.5
+  atr_multiple_tp: 2.0
+  cool_down_bars: 3
+thresholds:
+  no_trade_band: 0.5
+  rf_prob_buy: 0.6
+  rf_prob_sell: 0.6

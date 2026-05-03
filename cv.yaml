@@ -1,0 +1,30 @@
+green_hsv:
+  high:
+  - 85
+  - 255
+  - 255
+  low:
+  - 35
+  - 40
+  - 40
+min_candle_area: 150
+morph_kernel: 3
+red1_hsv:
+  high:
+  - 10
+  - 255
+  - 255
+  low:
+  - 0
+  - 50
+  - 50
+red2_hsv:
+  high:
+  - 179
+  - 255
+  - 255
+  low:
+  - 160
+  - 50
+  - 50
+resize_max_width: 1600

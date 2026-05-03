@@ -1,0 +1,9 @@
+artifacts:
+  backtest_dir: /content/drive/MyDrive/ARVisionGold/artifacts/backtests
+  candle_type: /content/drive/MyDrive/ARVisionGold/artifacts/cv/candle_type.txt
+  model_rf: /content/drive/MyDrive/ARVisionGold/artifacts/models/gold_price_predictor.joblib
+  patterns_dir: /content/drive/MyDrive/ARVisionGold/artifacts/patterns
+data:
+  chart_image: /content/drive/MyDrive/ARVisionGold/data/external/chart.png
+  processed_csv: /content/drive/MyDrive/ARVisionGold/data/processed/gold_data.csv
+root: /content/drive/MyDrive/ARVisionGold

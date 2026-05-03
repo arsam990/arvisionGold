@@ -1,0 +1,28 @@
+features:
+  include:
+  - Open
+  - High
+  - Low
+  - Close
+  - Volume
+  - RSI
+  - MACD
+  - MACD_signal
+  - MACD_hist
+  - BB_upper
+  - BB_middle
+  - BB_lower
+  - ATR
+model:
+  rf_params:
+    class_weight: balanced
+    max_depth: null
+    n_estimators: 400
+  type: rf
+seed: 42
+split:
+  shuffle: false
+  test_size: 0.2
+target:
+  name: NextCloseUp
+task: classification
