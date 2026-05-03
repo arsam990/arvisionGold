@@ -1,0 +1,15 @@
+{
+  "n_bars": 2446,
+  "n_trades": 2195,
+  "accuracy_updown": 0.8724373576309795,
+  "precision_up": 0.9989035087719298,
+  "recall_up": 0.7655462184873949,
+  "f1_up": 0.8667935299714558,
+  "profit_factor": 2.7955127586236608,
+  "max_drawdown": -0.3810872377465079,
+  "final_equity": 960.8637931659513,
+  "atr_sl": 1.5,
+  "atr_tp": 2.0,
+  "start_idx": 250,
+  "use_candle_proxy": false
+}
