@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARVision Gold Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── TICKER BAR ─────────────────────────────────────────────────── -->
+  <div class="ticker-bar">
+    <div class="ticker-inner" id="tickerInner">
+      <span class="ticker-item">XAU/USD <span id="tickerPrice" class="tick-val">—</span> <span id="tickerDelta" class="tick-delta">—</span></span>
+      <span class="ticker-sep">|</span>
+      <span class="ticker-item">GOLD FUTURES (GC=F)</span>
+      <span class="ticker-sep">|</span>
+      <span class="ticker-item">ARVision AI v2.0 &nbsp; ◆ &nbsp; LIVE</span>
+      <span class="ticker-sep">|</span>
+      <span class="ticker-item">XAU/USD <span class="tick-val">—</span></span>
+      <span class="ticker-sep">|</span>
+      <span class="ticker-item">GOLD FUTURES (GC=F)</span>
+      <span class="ticker-sep">|</span>
+      <span class="ticker-item">ARVision AI v2.0 &nbsp; ◆ &nbsp; LIVE</span>
+    </div>
+  </div>
+
+  <!-- ── HEADER ─────────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-icon">◈</span>
+      <span class="logo-text">AR<span class="gold">VISION</span> GOLD</span>
+    </div>
+    <nav class="header-nav">
+      <span class="nav-pill active">Dashboard</span>
+      <span class="nav-pill">Markets</span>
+      <span class="nav-pill">Analytics</span>
+      <span class="nav-pill">History</span>
+    </nav>
+    <div class="header-status">
+      <span class="status-dot"></span> SYSTEM ONLINE
+    </div>
+  </header>
+
+  <!-- ── MAIN GRID ──────────────────────────────────────────────────── -->
+  <main class="dashboard-grid">
+
+    <!-- LEFT: Visual Cortex Input -->
+    <section class="panel panel-left">
+      <div class="panel-header">
+        <span class="panel-icon">◉</span>
+        <h2>Visual Cortex Input</h2>
+        <span class="panel-badge">CV MODULE</span>
+      </div>
+
+      <!-- Drop zone / preview -->
+      <div class="dropzone" id="dropzone">
+        <img id="previewImg" class="preview-img hidden" src="" alt="chart preview" />
+        <div id="dropPlaceholder" class="drop-placeholder">
+          <div class="scan-ring"></div>
+          <p class="drop-hint">Drop chart image here<br/><span>or click to select</span></p>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" class="file-input" />
+      </div>
+
+      <!-- Metrics below image -->
+      <div class="mini-metrics">
+        <div class="mini-card">
+          <span class="mini-label">Vision Pattern</span>
+          <span class="mini-val" id="visionPattern">—</span>
+        </div>
+        <div class="mini-card">
+          <span class="mini-label">AI Trend Bias</span>
+          <span class="mini-val" id="aiTrend">—</span>
+        </div>
+      </div>
+
+      <!-- Run button -->
+      <button class="btn-run" id="runBtn" disabled>
+        <span class="btn-icon">⚡</span>
+        <span class="btn-text">RUN DIAGNOSTICS</span>
+        <span class="btn-shimmer"></span>
+      </button>
+    </section>
+
+    <!-- RIGHT: Analysis Core Output -->
+    <section class="panel-stack">
+
+      <!-- Price / Stats row -->
+      <div class="panel panel-stats">
+        <div class="panel-header">
+          <span class="panel-icon">◈</span>
+          <h2>Analysis Core Output</h2>
+          <span class="panel-badge live-badge">LIVE</span>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Live Price (XAU/USD)</div>
+            <div class="stat-value gold-text" id="livePrice">$ —</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">24h Change</div>
+            <div class="stat-value" id="priceDelta">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Model Accuracy</div>
+            <div class="stat-value gold-text">87.24 %</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Profit Factor</div>
+            <div class="stat-value gold-text">2.80×</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signal panel -->
+      <div class="panel panel-signal" id="signalPanel">
+        <div class="panel-header">
+          <span class="panel-icon">◆</span>
+          <h2>Confluence Signal</h2>
+        </div>
+        <div class="signal-display" id="signalDisplay">
+          <div class="signal-idle">
+            <div class="idle-ring"></div>
+            <p>Awaiting Data…</p>
+          </div>
+        </div>
+        <p class="signal-reason" id="signalReason"></p>
+      </div>
+
+      <!-- Loader overlay -->
+      <div class="loader-overlay hidden" id="loaderOverlay">
+        <div class="loader-ring"></div>
+        <p>Analysing Chart…</p>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    ARVision Gold &nbsp;|&nbsp; AI-Powered Gold Trading Assistant &nbsp;|&nbsp; v2.0 &nbsp;|&nbsp; <span class="gold">Not Financial Advice</span>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
