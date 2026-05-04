@@ -132,4 +132,4 @@ async function pollPrice() {
 }
 
 pollPrice();
-setInterval(pollPrice, 30_000);
+setInterval(pollPrice, 30000);

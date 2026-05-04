@@ -3,7 +3,13 @@ ARVision Gold – Flask Dashboard
 Run: python app.py
 """
 
-import os, io, cv2, json, yaml, joblib, base64
+import os
+import io
+import cv2
+import json
+import yaml
+import joblib
+import base64
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -67,8 +73,8 @@ def get_ai_prediction():
             return ("UP" if pred == 1 else "DOWN"), current_price
         else:
             return "MODEL MISSING", current_price
-    except Exception as e:
-        return f"ERROR: {e}", 0.0
+    except Exception:
+        return "ERROR", 0.0
 
 
 def analyze_image(img_bytes: bytes) -> str:
@@ -157,4 +163,6 @@ def live_price():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # Set FLASK_DEBUG=1 in your environment to enable debug mode.
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host="0.0.0.0", port=5000, debug=debug)
