@@ -1,0 +1,31 @@
+name: arvision_gold
+description: ARVision Gold — AI-powered Gold Trading AR App with HUD overlay.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Camera live feed
+  camera: ^0.10.5+9
+
+  # HTTP requests (multipart upload + live price)
+  http: ^1.2.0
+
+  # Camera permission at runtime (Android & iOS)
+  permission_handler: ^11.3.0
+
+  # Futuristic fonts: Rajdhani + Share Tech Mono
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
