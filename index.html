@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARVision Gold Dashboard</title>
+    <style>
+        :root {
+            --bg: #040507;
+            --panel: rgba(16, 18, 22, 0.78);
+            --panel-soft: rgba(20, 24, 30, 0.6);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f3f6fc;
+            --text-muted: #8b97ad;
+            --gold: #f3c35d;
+            --gold-bright: #ffd982;
+            --gold-shadow: rgba(243, 195, 93, 0.35);
+            --green: #33d690;
+            --red: #ff6767;
+            --amber: #e2ab44;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text-main);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(255, 217, 130, 0.12), transparent 38%),
+                radial-gradient(circle at 85% 0%, rgba(37, 66, 122, 0.25), transparent 40%),
+                linear-gradient(145deg, #010103 0%, #070a10 46%, #05070b 100%);
+            padding: 28px;
+        }
+
+        .app-shell {
+            max-width: 1240px;
+            margin: 0 auto;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            box-shadow: 0 26px 48px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            overflow: hidden;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 28px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 0.06em;
+            color: var(--gold-bright);
+            text-shadow: 0 0 20px rgba(255, 216, 128, 0.4);
+        }
+
+        .title p {
+            margin: 8px 0 0;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .market-pill {
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 217, 130, 0.35);
+            background: linear-gradient(120deg, rgba(243, 195, 93, 0.12), rgba(243, 195, 93, 0.03));
+            color: var(--gold-bright);
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 0 18px rgba(243, 195, 93, 0.18);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1.08fr 1fr;
+            gap: 20px;
+            padding: 24px;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+        }
+
+        .panel:hover {
+            transform: translateY(-3px);
+            border-color: rgba(243, 195, 93, 0.32);
+            box-shadow: 0 24px 36px rgba(0, 0, 0, 0.45), 0 0 22px rgba(243, 195, 93, 0.1);
+        }
+
+        .camera-section {
+            text-align: center;
+        }
+
+        .panel-title {
+            margin: 0 0 14px;
+            font-size: 16px;
+            letter-spacing: 0.03em;
+            color: #dce4f7;
+        }
+
+        .video-wrap {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 18px 26px rgba(0, 0, 0, 0.55);
+            background: #020304;
+        }
+
+        video {
+            width: 100%;
+            display: block;
+            border-radius: 14px;
+            min-height: 280px;
+            object-fit: cover;
+            filter: contrast(1.08) saturate(1.08);
+        }
+
+        .scan-line {
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.02) 0%,
+                rgba(255, 255, 255, 0) 20%,
+                rgba(255, 216, 128, 0.06) 50%,
+                rgba(255, 255, 255, 0) 80%,
+                rgba(255, 255, 255, 0.02) 100%
+            );
+            mix-blend-mode: screen;
+            animation: pulseScan 3.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseScan {
+            0%, 100% { opacity: 0.25; }
+            50% { opacity: 0.75; }
+        }
+
+        button {
+            position: relative;
+            overflow: hidden;
+            margin-top: 16px;
+            width: 100%;
+            border: 1px solid rgba(255, 217, 130, 0.45);
+            border-radius: 12px;
+            padding: 14px 18px;
+            color: #161008;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(130deg, #ffd982, #f3c35d 52%, #e9b045);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45), 0 0 16px var(--gold-shadow);
+            transform: perspective(600px) translateZ(0);
+            transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: -180%;
+            left: -60%;
+            width: 60%;
+            height: 420%;
+            transform: rotate(26deg);
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.55s ease;
+        }
+
+        button:hover {
+            transform: perspective(600px) translateY(-3px) rotateX(5deg);
+            filter: saturate(1.08) brightness(1.03);
+            box-shadow: 0 14px 26px rgba(0, 0, 0, 0.5), 0 0 22px rgba(243, 195, 93, 0.42);
+        }
+
+        button:hover::before {
+            left: 130%;
+        }
+
+        button:active {
+            transform: translateY(0) scale(0.995);
+        }
+
+        .results-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--panel-soft);
+        }
+
+        .stat-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-line:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            color: #eef4ff;
+            font-weight: 600;
+        }
+
+        .signal-box {
+            font-size: 30px;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 0.08em;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.03);
+            transition: all 0.22s ease;
+        }
+
+        .BUY {
+            background: linear-gradient(130deg, rgba(51, 214, 144, 0.22), rgba(51, 214, 144, 0.08));
+            color: var(--green);
+            border-color: rgba(51, 214, 144, 0.45);
+            box-shadow: 0 0 18px rgba(51, 214, 144, 0.2);
+        }
+
+        .SELL {
+            background: linear-gradient(130deg, rgba(255, 103, 103, 0.22), rgba(255, 103, 103, 0.08));
+            color: var(--red);
+            border-color: rgba(255, 103, 103, 0.45);
+            box-shadow: 0 0 18px rgba(255, 103, 103, 0.2);
+        }
+
+        .WAIT {
+            background: linear-gradient(130deg, rgba(226, 171, 68, 0.2), rgba(226, 171, 68, 0.08));
+            color: var(--amber);
+            border-color: rgba(226, 171, 68, 0.42);
+            box-shadow: 0 0 18px rgba(226, 171, 68, 0.18);
+        }
+
+        #reason {
+            margin-top: 14px;
+            min-height: 20px;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        @media (max-width: 980px) {
+            body {
+                padding: 14px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .market-pill {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-shell">
+        <div class="header">
+            <div class="title">
+                <h1>ARVision // GOLD_PROTOCOL</h1>
+                <p>Real-Time Hybrid Trading Assistant</p>
+            </div>
+            <div class="market-pill">XAU/USD Intelligence Stream</div>
+        </div>
+
+        <div class="container">
+            <!-- Left Side: Camera -->
+            <div class="camera-section panel">
+                <h3 class="panel-title">Visual Cortex Input</h3>
+                <div class="video-wrap">
+                    <video id="webcam" autoplay playsinline></video>
+                    <div class="scan-line"></div>
+                </div>
+                <canvas id="canvas" style="display:none;"></canvas>
+                <button id="runBtn" onclick="runDiagnostics()">Run Diagnostics</button>
+            </div>
+
+            <!-- Right Side: Results -->
+            <div class="results-section">
+                <div class="card panel">
+                    <h3 class="panel-title">Analysis Core Output</h3>
+                    <div class="stat-line">
+                        <span class="stat-label">Live Price (XAU/USD)</span>
+                        <span class="stat-value">$<span id="price">--.--</span></span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">Vision Pattern</span>
+                        <span id="vision" class="stat-value">--</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">AI Trend Bias</span>
+                        <span id="ai" class="stat-value">--</span>
+                    </div>
+                </div>
+
+                <div class="card panel">
+                    <h3 class="panel-title">Confluence Signal</h3>
+                    <div id="signalBox" class="signal-box">Awaiting Data...</div>
+                    <p id="reason"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('canvas');
+
+        // Start Webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => { video.srcObject = stream; })
+            .catch(err => { console.error("Camera access denied", err); });
+
+        function runDiagnostics() {
+            document.getElementById('signalBox').innerText = "Analyzing...";
+            document.getElementById('signalBox').className = "signal-box";
+
+            // Capture Image
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+
+            // Convert to Blob and send to Server
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('file', blob, 'chart.jpg');
+
+                fetch('/predict', { method: 'POST', body: formData })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                            return;
+                        }
+                        // Update UI
+                        document.getElementById('price').innerText = data.price;
+                        document.getElementById('vision').innerText = data.chart_candle;
+                        document.getElementById('ai').innerText = data.ai_trend;
+
+                        const sigBox = document.getElementById('signalBox');
+                        sigBox.innerText = data.signal;
+                        sigBox.className = `signal-box ${data.signal}`;
+
+                        document.getElementById('reason').innerText = data.reason;
+                    })
+                    .catch(err => console.error(err));
+            }, 'image/jpeg');
+        }
+    </script>
+</body>
+</html>
